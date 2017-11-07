@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-lock"></span> Choissisez une destination</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Departing Airport </label>
+                        <div class="col-sm-9">
+                       <%= select_tag(:from_airport, options_for_select(@airports)) %>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">
+                            Arriving Airport:</label>
+                        <div class="col-sm-9">
+                            <%= select_tag(:to_airport, options_for_select(@airports)) %></h2>
+                        </div>
+                    </div>
+										<div class="form-group">
+												<label for="inputPassword3" class="col-sm-3 control-label">
+														Date:</label>
+												<div class="col-sm-9">
+														<%= select_tag(:start, options_for_select(@starts)) %></h2>
+												</div>
+												<div class="form-group">
+														<label for="inputEmail3" class="col-sm-3 control-label">
+																 Passengers: </label>
+														<div class="col-sm-9">
+													 <%= select_tag(:passengers, options_for_select(@passengers)) %>
+														</div>
+												</div>
+										</div>
+                    <div class="form-group last">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button type="submit" class="btn btn-success btn-sm" style="margin:0px auto;">
+                                <%= submit_tag "Search" %></button>
+                                <% if !params[:start].nil? %>
+	<% if @flights.empty? %>
+		Sorry, no flights found.
+	<% else %>
+		<%= form_tag 'bookings/new', method: "get" do %>
+			<% @flights.each do |f| %>
+				<%= radio_button_tag :flight_id, f.id %>
+				<%= f.from_airport.code %> to <%= f.to_airport.code %>, on <%= f.start.strftime("%B %d %Y, %I:%M %p") %>
+			<% end %>
+			<p>
+			<%= hidden_field_tag :passengers, params[:passengers] %>
+			<%= submit_tag "Choose Flight" %>
+		<% end %>
+	<% end %>
+<% end %>
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
